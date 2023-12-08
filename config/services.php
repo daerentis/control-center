@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'fastbill' => [
+        'url' => env('FASTBILL_URL'),
+        'email' => env('FASTBILL_EMAIL'),
+        'key' => env('FASTBILL_KEY'),
+    ]
 ];

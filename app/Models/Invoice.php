@@ -18,7 +18,7 @@ class Invoice extends Model
     public function getRows()
     {
         // $responseInvoices = cache()->remember('invoices', 60 * 60, function () {
-        //     $response = Http::withBasicAuth(env('FASTBILL_API_EMAIL'), env('FASTBILL_API_KEY'))->post(env('FASTBILL_API_URL'), [
+        //     $response = Http::withBasicAuth(config('services.fastbill.email'), config('services.fastbill.key'))->post(config('services.fastbill.url'), [
         //         'SERVICE' => 'invoice.get',
         //         'LIMIT' => 90,
         //         'FILTER' => [
@@ -30,7 +30,7 @@ class Invoice extends Model
         //     return $response->json('RESPONSE.INVOICES');
         // });
 
-        $response = Http::withBasicAuth(env('FASTBILL_API_EMAIL'), env('FASTBILL_API_KEY'))->post(env('FASTBILL_API_URL'), [
+        $response = Http::withBasicAuth(config('services.fastbill.email'), config('services.fastbill.key'))->post(config('services.fastbill.url'), [
             'SERVICE' => 'invoice.get',
             'LIMIT' => 90,
             'FILTER' => [

@@ -34,24 +34,6 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('number')
-                    ->searchable(),
-
-                TextColumn::make('organization')
-                    ->searchable(),
-
-                TextColumn::make('title')
-                    ->searchable(),
-
-                TextColumn::make('date')
-                    ->formatStateUsing(function ($state) {
-                        return now()->parse($state)->isoFormat('ll');
-                    }),
-
-                TextColumn::make('total')
-                    ->formatStateUsing(function ($state) {
-                        return Number::currency($state, 'EUR', 'de');
-                    }),
 
                 TextColumn::make('is_paid')
                     ->label('Paid')
@@ -68,7 +50,7 @@ class InvoiceResource extends Resource
                             })
                             ->requiresConfirmation()
                             ->action(function (Invoice $invoice) {
-                                $response = Http::withBasicAuth(env('FASTBILL_API_EMAIL'), env('FASTBILL_API_KEY'))->post(env('FASTBILL_API_URL'), [
+                                $response = Http::withBasicAuth(config('services.fastbill.email'), config('services.fastbill.key'))->post(config('services.fastbill.url'), [
                                     'SERVICE' => 'invoice.setpaid',
                                     'DATA' => [
                                         'INVOICE_ID' => $invoice['id'],
@@ -83,7 +65,28 @@ class InvoiceResource extends Resource
                                         ->send();
                                 }
                             }),
-                    )
+                    ),
+
+                TextColumn::make('number')
+                    ->searchable(),
+
+                TextColumn::make('total')
+                    ->formatStateUsing(function ($state) {
+                        return Number::currency($state, 'EUR', 'de');
+                    }),
+
+                TextColumn::make('organization')
+                    ->searchable(),
+
+                TextColumn::make('title')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('date')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->formatStateUsing(function ($state) {
+                        return now()->parse($state)->isoFormat('ll');
+                    })
             ])
             ->defaultSort('number', 'desc')
             ->filters([
@@ -100,7 +103,7 @@ class InvoiceResource extends Resource
                     ->modalSubmitAction(false)
                     ->modalCancelAction(false)
                     ->modalContent(function () {
-                        $response = Http::withBasicAuth(env('FASTBILL_API_EMAIL'), env('FASTBILL_API_KEY'))->post(env('FASTBILL_API_URL'), [
+                        $response = Http::withBasicAuth(config('services.fastbill.email'), config('services.fastbill.key'))->post(config('services.fastbill.url'), [
                             'SERVICE' => 'time.get',
                             'LIMIT' => 100
                         ]);
