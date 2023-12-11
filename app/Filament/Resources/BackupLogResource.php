@@ -67,7 +67,8 @@ class BackupLogResource extends Resource
                     ->searchable()
                     ->wrap(),
 
-                TextColumn::make('created_at'),
+                TextColumn::make('created_at')
+                    ->sortable(),
             ])
             ->paginated([100, 200])
             ->defaultSort('created_at', 'desc')
