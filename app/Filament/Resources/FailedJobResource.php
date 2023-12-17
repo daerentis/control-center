@@ -10,9 +10,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontFamily;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -57,7 +60,9 @@ class FailedJobResource extends Resource
                     ->badge(),
 
                 TextColumn::make('exception')
-                    ->limit(120),
+                    ->fontFamily(FontFamily::Mono)
+                    ->size(TextColumnSize::ExtraSmall)
+                    ->wrap(),
 
                 TextColumn::make('failed_at')
             ])

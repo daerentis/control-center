@@ -114,22 +114,22 @@ return [
             /*
              * The number of days for which daily backups must be kept.
              */
-            'keep_daily_backups_for_days' => 31,
+            'keep_daily_backups_for_days' => 14,
 
             /*
              * The number of weeks for which one weekly backup must be kept.
              */
-            'keep_weekly_backups_for_weeks' => 8,
+            'keep_weekly_backups_for_weeks' => 4,
 
             /*
              * The number of months for which one monthly backup must be kept.
              */
-            'keep_monthly_backups_for_months' => 4,
+            'keep_monthly_backups_for_months' => 2,
 
             /*
              * The number of years for which one yearly backup must be kept.
              */
-            'keep_yearly_backups_for_years' => 2,
+            'keep_yearly_backups_for_years' => 1,
 
             /*
              * After cleaning up the backups remove the oldest backup until
@@ -164,7 +164,7 @@ return [
         ],
         'perform_cleanup_for_source_job' => [
             'queue' => 'backup-server-cleanup',
-            'timeout' => CarbonInterval::hour(1)->totalSeconds,
+            'timeout' => CarbonInterval::hour(2)->totalSeconds,
         ],
         'perform_cleanup_for_destination_job' => [
             'queue' => 'backup-server-cleanup',

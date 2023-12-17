@@ -20,7 +20,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
@@ -41,7 +41,6 @@ class AdminPanelProvider extends PanelProvider
                     ->url('/horizon')
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->openUrlInNewTab()
-                    ->sort(1),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
